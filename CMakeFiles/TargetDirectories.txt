@@ -1,0 +1,3 @@
+/home/spudro/cppless/CMakeFiles/edit_cache.dir
+/home/spudro/cppless/CMakeFiles/rebuild_cache.dir
+/home/spudro/cppless/CMakeFiles/main.dir
