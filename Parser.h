@@ -1,10 +1,20 @@
 #ifndef CALC_PARSER_H
 #define CALC_PARSER_H
+
+#include "Lexer.h"
+
 namespace Parser {
 
-double expr(bool get);
-double term(bool get);
-double prim(bool get);
+struct Enode {
+  Lexer::token_t operand;
+  Enode *left;
+  Enode *right;
+  double *value;
+
+  Enode &expr(bool get);
+  Enode &term(bool get);
+  bool prim(bool get);
+};
 }
 
 #endif

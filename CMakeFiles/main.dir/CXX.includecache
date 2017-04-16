@@ -23,8 +23,6 @@ string
 -
 
 /home/spudro/cppless/Parser.cpp
-Lexer.h
-/home/spudro/cppless/Lexer.h
 Parser.h
 /home/spudro/cppless/Parser.h
 table.h
@@ -33,6 +31,8 @@ stdexcept
 -
 
 /home/spudro/cppless/Parser.h
+Lexer.h
+/home/spudro/cppless/Lexer.h
 
 /home/spudro/cppless/main.cpp
 Lexer.h

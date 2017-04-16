@@ -1,4 +1,4 @@
-#include "Lexer.h"
+//#include "Lexer.h"
 #include "Parser.h"
 #include "table.h"
 #include <stdexcept>
@@ -9,16 +9,20 @@ namespace Parser {
 using namespace Lexer;
 
 // PLUS | MINUS
-double expr(bool get) {
+Enode &expr(bool get) {
 
-  double left = term(get);
+  Enode *left = prim(get);
   for (;;) {
     switch (current_token) {
     case PLUS:
-      left += term(true);
-      break;
     case MINUS:
-      left -= term(true);
+    case MUL:
+    case DIV:
+      Enode *node = new Enode;
+      node->operand = current_token;
+      node->left = left;
+      node->right = term(true);
+      left = node;
       break;
     default:
       return left;
@@ -28,17 +32,22 @@ double expr(bool get) {
   return 0;
 }
 
-double term(bool get) {
-  double left = prim(get);
+/*
+Enode &term(bool get) {
+  Enode *left = prim(get);
 
   for (;;) {
     switch (current_token) {
     case MUL:
-      left *= prim(true);
+      Enode *node = new Enode;
+      node->operand = current_token;
+      node->left = left;
+      node->right = prim(true);
+      left = node;
       break;
     case DIV:
       if (double d = prim(true)) {
-        left /= d;
+        //left /= d;
         break;
       }
       // TODO error hendler
@@ -52,23 +61,33 @@ double term(bool get) {
 
   return 0;
 }
+*/
 
-double prim(bool get) {
+Enode &prim(bool get) {
 
   if (get)
     getToken();
+
+  Enode *val = new Enode;
   switch (current_token) {
   case NUMBER: {
-    double val = number_value;
+    val->operand = current_token;
+    val->value = number_value;
     getToken();
     return val;
   }
   case NAME: {
-    double &v = table[string_value];
+    // &v = table[string_value];
+    // if (getToken() == ASSIGN) {
+    //   v = expr(true);
+    // return v;
+    // }
+    val->operand = current_token;
+    val->left = table[string_value];
     if (getToken() == ASSIGN) {
-      v = expr(true);
+      val->right = expr(true);
     }
-    return v;
+    return val;
   }
   case MINUS: {
     return -prim(true);
