@@ -1,24 +1,52 @@
-#include "Lexer.h"
-#include "Parser.h"
-#include "table.h"
+#include "Lexer.hpp"
+#include "Parser.hpp"
+#include "table.hpp"
+#include "AST_tree.h"
 #include <iostream>
 
+namespace Cal {
+    struct Token {
+        std::string string;
+        Token *next;
+
+    };
+
+    Token *make(std::string string);
+
+    Token *call();
+}
+namespace Cal {
+    Token *make(std::string string) {
+        Token *node = new Token;
+        node->string = string;
+        node->next = 0;
+        return node;
+    }
+
+    Token *call() {
+        Token *node = new Token;
+        node->next = make("hollo!!!");
+        return node;
+    }
+
+    void printToken(const Token *node) {
+        std::cout << node->string << std::endl;
+        if (node->next != NULL) {
+            std::cout << '\t';
+            printToken(node->next);
+        }
+    }
+}
+
 int main() {
-  // Lexer::token_t tok = Lexer::getToken();
-  // if (Lexer::current_token == Lexer::END) {
-  //   std::cout << "TOKEN - END" << '\n';
-  // }
-  // std::cout << Lexer::current_token << '\n';
-  // std::cout << "Current token: " << Lexer::NAME << '\n';
-  // std::cout << Lexer::getToken() << '\n';
-  // std::cout << Lexer::current_token << '\n';
-  std::cout << "Lexer..." << '\n';
-  // try {
-  //         i = intDivEx (10, 0);
-  //     } catch (std::overflow_error e) {
-  //         std::cout << e.what() << " -> ";
-  //     }
-  table["pi"] = 3.14;
+    table["pi"] = 3.14;
+    table["e"] = 2.71;
+    std::cout << "Lexer..." << '\n';
+    Parser::Token *token = Parser::expr(true);
+    Parser::AST_tree::printAST(token);
+
+
+/*  table["pi"] = 3.14;
   table["e"] = 2.71;
   while (std::cin) {
 
@@ -42,7 +70,7 @@ int main() {
     } catch (std::runtime_error e) {
       std::cout << e.what() << std::endl;
     }
-  }
+  }*/
 
-  return 0;
+    return 0;
 }
