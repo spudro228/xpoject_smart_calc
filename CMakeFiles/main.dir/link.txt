@@ -1,1 +1,0 @@
-/usr/bin/c++      CMakeFiles/main.dir/main.cpp.o CMakeFiles/main.dir/Lexer.cpp.o CMakeFiles/main.dir/Parser.cpp.o CMakeFiles/main.dir/table.cpp.o  -o build/main 
